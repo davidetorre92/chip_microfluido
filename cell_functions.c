@@ -136,8 +136,8 @@ void print_sectors(FILE *stream, sector *s)
 cell_list* construct_grid(sector* s, float cell_size, char *mode)
 {
     pos2D start_pos;
-    cell_list* grid;
-    pos2D *neighbor;
+    cell_list* grid = NULL;
+    pos2D *neighbor = NULL;
     int n_neighbors;
     if(strcmp(mode, "QUAD") == 0)
     {
@@ -168,6 +168,18 @@ cell_list* construct_grid(sector* s, float cell_size, char *mode)
 
 void put(pos2D r, sector s, cell_list* grid, pos2D *neighbors, int n_neigh)
 {
+    if(isInside(r, s))
+    {
+        grid = (cell_list*)malloc(sizeof(cell_list));
+        grid.c.r = r;
+        grid.c.id = 0;
+        grid.c.neighbors = (cell*)malloc(sizeof(cell)*n_neigh);  
+    }
     fprintf(stdout, "Debug: %lf %lf\n", r.x, r.y);
     return;
+}
+
+bool isInside(pos2D r, sector s)
+{
+
 }

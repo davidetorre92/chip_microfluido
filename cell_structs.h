@@ -19,8 +19,9 @@ typedef struct sector{
 
 typedef struct cell{
     struct pos2D r;
-    int id;
-    int sector_id;
+    unsigned int id;
+    unsigned int sector_id;
+    unsigned int tilemap_id;
     struct cell* neighbors;
 } cell;
 

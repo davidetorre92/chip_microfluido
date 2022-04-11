@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     sector_filename = read_text(cpt,"Sectors file", true);
     s = read_sectors(sector_filename);
 
-    grid = construct_grid(s, 4, "QUAD2"); 
+    grid = construct_grid(s, 4, "QUAD"); 
 
     free(config_filename);
     free(sector_filename);
