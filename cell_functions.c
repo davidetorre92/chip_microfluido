@@ -132,3 +132,42 @@ void print_sectors(FILE *stream, sector *s)
         }
     }
 }
+
+cell_list* construct_grid(sector* s, float cell_size, char *mode)
+{
+    pos2D start_pos;
+    cell_list* grid;
+    pos2D *neighbor;
+    int n_neighbors;
+    if(strcmp(mode, "QUAD") == 0)
+    {
+        n_neighbors = 4;
+        neighbor = (pos2D*)malloc(sizeof(pos2D)*n_neighbors);
+        neighbor[0].x = 0.;
+        neighbor[0].y = cell_size;
+        neighbor[1].x = cell_size;
+        neighbor[1].y = 0.;
+        neighbor[2].x = 0.;
+        neighbor[2].y = -cell_size;
+        neighbor[3].x = -cell_size;
+        neighbor[3].y = 0.;
+    }
+    if(neighbor == NULL)
+    {
+        fprintf(stderr, "Unknown grid constructor command %s. Aborting...\n", mode);
+        exit(1);
+    }
+    for(int i = 0; s[i].n_corners != 0; i++)
+    {
+        start_pos.x = s[i].corner[0].x + cell_size*0.5;
+        start_pos.y = s[i].corner[0].y + cell_size*0.5;
+        put(start_pos, s[i], grid, neighbor, n_neighbors);
+    }
+    return grid;
+}
+
+void put(pos2D r, sector s, cell_list* grid, pos2D *neighbors, int n_neigh)
+{
+    fprintf(stdout, "Debug: %lf %lf\n", r.x, r.y);
+    return;
+}

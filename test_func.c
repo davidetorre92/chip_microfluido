@@ -8,13 +8,17 @@
 int main(int argc, char *argv[])
 {
     sector* s;
+    cell_list *grid;
+
     char *config_filename;
     config_filename = parse_config_file(argc, argv);
     FILE *cpt = Fopen(config_filename, "r");
     char *sector_filename;
-    sector_filename = read_text(cpt,"Sectors File", true);
+    sector_filename = read_text(cpt,"Sectors file", true);
     s = read_sectors(sector_filename);
-    print_sectors(stdout, s);
+
+    grid = construct_grid(s, 4, "QUAD2"); 
+
     free(config_filename);
     free(sector_filename);
     free(s);
