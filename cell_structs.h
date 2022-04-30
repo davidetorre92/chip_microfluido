@@ -30,10 +30,17 @@ typedef struct cell_list{
     struct cell_list *next;
 } cell_list;
 
-typedef struct blockmap{
+typedef struct tile{
     struct pos2D r;
-    float block_size;
-    struct cell_list bm_cells;
-} blockmap;
+    unsigned int id;
+    struct cell_list cells_in_tile;
+} tile;
+
+typedef struct blockmap{
+    double tile_size;
+    unsigned int ntilex, ntiley;
+    pos2D corners[2];
+    tile* tilemap;
+}
 
 #endif

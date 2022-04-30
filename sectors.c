@@ -7,9 +7,6 @@
 #include <stdbool.h>
 #define MAX_SECTOR_BUFFER_SIZE 255
 
-int check_parenthesis_consistency(FILE *fp, char *filename);
-void allocate_corners(sector *s, FILE *fp);
-
 sector* read_sectors(char* filename)
 {
     FILE *fp;
@@ -131,37 +128,4 @@ void print_sectors(FILE *stream, sector *s)
             fprintf(stream, "%lf %lf\n", s[i].corner[j].x, s[i].corner[j].y);
         }
     }
-}
-
-cell_list* construct_grid(sector* s, float cell_size, char *mode)
-{
-    pos2D start_pos;
-    cell_list* grid = NULL;
-    pos2D *neighbor = NULL;
-    int n_neighbors;
-    if(strcmp(mode, "QUAD") == 0)
-    {
-        n_neighbors = 4;
-        neighbor = (pos2D*)malloc(sizeof(pos2D)*n_neighbors);
-        neighbor[0].x = 0.;
-        neighbor[0].y = cell_size;
-        neighbor[1].x = cell_size;
-        neighbor[1].y = 0.;
-        neighbor[2].x = 0.;
-        neighbor[2].y = -cell_size;
-        neighbor[3].x = -cell_size;
-        neighbor[3].y = 0.;
-    }
-    if(neighbor == NULL)
-    {
-        fprintf(stderr, "Unknown grid constructor command %s. Aborting...\n", mode);
-        exit(1);
-    }
-    for(int i = 0; s[i].n_corners != 0; i++)
-    {
-        start_pos.x = s[i].corner[0].x + cell_size*0.5;
-        start_pos.y = s[i].corner[0].y + cell_size*0.5;
-        put(start_pos, s[i], grid, neighbor, n_neighbors);
-    }
-    return grid;
 }

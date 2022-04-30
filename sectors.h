@@ -9,6 +9,7 @@
 
 sector* read_sectors(char* filename);
 void print_sectors(FILE *stream, sector* s);
-cell_list* construct_grid(sector* s, float cell_size, char *mode);
-void put(pos2D r, sector s, cell_list* grid, pos2D *neighbors, int n_neigh);
+int check_parenthesis_consistency(FILE *fp, char *filename);
+void allocate_corners(sector *s, FILE *fp);
+
 #endif
