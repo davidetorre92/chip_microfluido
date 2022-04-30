@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "cell_structs.h"
-#include "cell_functions.h"
+#include "sectors.h"
 #include "data_handler.h"
 
 int main(int argc, char *argv[])

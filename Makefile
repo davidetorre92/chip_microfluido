@@ -2,7 +2,7 @@ CC=gcc
 LD=$(CC)
 CFLAGS=-c -g -I$(CUDA_HOME)/include -I${NIFTI_HOME}/include -Wall
 LDLIBS=-lm
-OBJECTS=data_handler.o cell_functions.o 
+OBJECTS=data_handler.o sector_handler.o 
 
 all: chip
 
