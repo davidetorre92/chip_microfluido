@@ -7,9 +7,9 @@
 #define SECTORS_LINKAGE
 #endif
 
-sector* read_sectors(char* filename);
 void print_sectors(FILE *stream, sector* s);
 int check_parenthesis_consistency(FILE *fp, char *filename);
 void allocate_corners(sector *s, FILE *fp);
+sector* read_sectors(char* filename);
 
 #endif

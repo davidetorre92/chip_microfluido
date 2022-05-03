@@ -33,7 +33,7 @@ typedef struct cell_list{
 typedef struct tile{
     struct pos2D r;
     unsigned int id;
-    struct cell_list cells_in_tile;
+    struct cell_list *first_cit;
 } tile;
 
 typedef struct blockmap{
@@ -41,6 +41,6 @@ typedef struct blockmap{
     unsigned int ntilex, ntiley;
     pos2D corners[2];
     tile* tilemap;
-}
+} blockmap;
 
 #endif

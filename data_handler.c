@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "data_handler.h"
+#include "cell_costants.h"
 #define MAXBUFFER_SIZE 512
 char *parse_config_file(int argc, char *argv[])
 {
@@ -39,7 +40,7 @@ FILE *Fopen(char *filename, char *cmd)
 
 }
 
-double read_data(FILE* fp, char *keyword, int ind, bool turnback)
+double read_data(FILE* fp, char *keyword, int ind, bool turnback, double dft)
 {
     const char *DELIMITER = "=";
     char line[MAXBUFFER_SIZE];
@@ -72,15 +73,15 @@ double read_data(FILE* fp, char *keyword, int ind, bool turnback)
     {
         if(!turnback)
         {
-            read_data(fp, keyword, ind, true);
+            read_data(fp, keyword, ind, true, dft);
         }
-        fprintf(stdout, "Warning: %s not found, returning 0.0\n",data_key);
-        data = 0.;
+        fprintf(stdout, "Warning: %s not found, returning %lf\n",data_key, dft);
+        data = dft;
     }
     return data;
 }
 
-char* read_text(FILE* fp, char *keyword, bool mandatory)
+char* read_text(FILE* fp, char *keyword, bool mandatory, char *dft)
 {
     const char *DELIMITER = "=";
     char line[MAXBUFFER_SIZE];
@@ -105,6 +106,11 @@ char* read_text(FILE* fp, char *keyword, bool mandatory)
     {
         fprintf(stderr, "Error: mandatory field\n%s\n not found in configuration file. Exiting\n",keyword);
         exit(1);
+    }
+    if(!found && !mandatory)
+    {
+        fprintf(STREAM, "Warning: %s not found, setting it to its default value: %s\n", keyword, dft);
+        data = strcpy(data, dft);
     }
     return data;
 }

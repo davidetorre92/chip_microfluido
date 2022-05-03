@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include "cell_costants.h"
 #include "cell_structs.h"
 #include "sectors.h"
 #include <stdbool.h>

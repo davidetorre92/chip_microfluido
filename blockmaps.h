@@ -7,5 +7,7 @@
 #define BLOCKMAPS_LINKAGE
 #endif
 
-void make_the_block_map(tile** blockmap, sector *s, double tile_size);
+blockmap* make_the_block_map(sector *s, double tile_size);
+void print_blockmap(FILE* stream, blockmap* bm);
+
 #endif

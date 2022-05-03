@@ -3,21 +3,23 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cell_structs.h"
+#include "cell_costants.h"
 #include "sectors.h"
 #include "blockmaps.h"
 #include <stdbool.h>
 
-void make_the_block_map(blockmap** bm, sector *s, double tile_size)
+blockmap* make_the_block_map(sector *s, double tile_size)
 {
 
     bool first = true;
     double min_x, max_x, min_y, max_y;
     unsigned int ntilex, ntiley;
     unsigned int id = 0;
+    blockmap* bm;
 
     for(int i = 0; s[i].n_corners != 0; i++)
     {
-        for(int j = 0; j < s[j].n_corners; j++)
+        for(int j = 0; j < s[i].n_corners; j++)
         {
             if(first == true)
             {
@@ -36,7 +38,7 @@ void make_the_block_map(blockmap** bm, sector *s, double tile_size)
     } 
     ntilex = (unsigned int)((max_x - min_x)/tile_size + 1);
     ntiley = (unsigned int)((max_y - min_y)/tile_size + 1);
-    *bm = (blockmap*)malloc(sizeof(blockmap));
+    bm = (blockmap*)malloc(sizeof(blockmap));
     if(bm == NULL)
     {
         fprintf(stderr, "Unable to allocate memory in make_the_block_map. Aborting...\n");
@@ -50,16 +52,24 @@ void make_the_block_map(blockmap** bm, sector *s, double tile_size)
     bm->tile_size = tile_size;
     bm->ntilex = ntilex;
     bm->ntiley = ntiley;
-    bm->tilemap = (tile*)malloc(sizeof(tile) * ntilex * ntiley)
+    bm->tilemap = (tile*)malloc(sizeof(tile) * ntilex * ntiley);
     for(int xi = 0; xi < ntilex; xi++)
     {
         for(int yi = 0; yi < ntiley; yi++)
         {
-        bm->tilemap[id].r.x = min_x + ntilex * tile_size;
-        bm->tilemap[id].r.y = min_y + ntiley * tile_size;
+        bm->tilemap[id].r.x = min_x + xi * tile_size;
+        bm->tilemap[id].r.y = min_y + yi * tile_size;
         bm->tilemap[id].id = id;
-        bm->tilemap[id].cells_in_tile = NULL;
         id++;
         }
+    }
+    return bm;
+}
+
+void print_blockmap(FILE* stream, blockmap* bm)
+{
+    for(int i = 0; i < bm->ntilex * bm->ntiley; i++)
+    {
+        fprintf(stream, "%d:\t%lf\t%lf\n", i, bm->tilemap[i].r.x, bm->tilemap[i].r.y);
     }
 }

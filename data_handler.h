@@ -8,8 +8,8 @@
 #endif
 #include <stdbool.h>
 char *parse_config_file(int argc, char *argv[]);
-double read_data(FILE* fp, char *keyword, int ind, bool turnback);
-char* read_text(FILE* fp, char *keyword, bool mandatory);
+double read_data(FILE* fp, char *keyword, int ind, bool turnback, double dft);
+char* read_text(FILE* fp, char *keyword, bool mandatory, char* dft);
 FILE *Fopen(char *filename, char *cmd);
 #define MAXBUFFER_SIZE 512
 #endif
